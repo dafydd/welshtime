@@ -79,7 +79,7 @@ public class WelshTime {
             "chwech",
             "saith",
             "wyth",
-            "naw",
+            "nine",
             "deg",
             "un ar ddeg",
             "deuddeg",
