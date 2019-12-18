@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        plugin = {"pretty", "json:target/jsonreports.json", "html:target/htmlreports" },
+        plugin = {"pretty", "json:target/cucumberreports.json", "html:target/htmlreports" },
         glue = "net/dafydd/welshtime/specs")
 public class RunCucumberIT {
 }
