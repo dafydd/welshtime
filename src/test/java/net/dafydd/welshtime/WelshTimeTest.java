@@ -36,9 +36,9 @@ class WelshTimeTest {
 
     @Test
     void minutesPastShouldNotSoftMutateTheFirstPart() {
-        String words2 = WelshTime.time(t(2019, 5, 3, 9, 20));
-        assertNotEquals("ddau ddeg munud wedi naw", words2);
-        assertEquals("dau ddeg munud wedi naw", words2);
+        String words = WelshTime.time(t(2019, 5, 3, 9, 20));
+        assertNotEquals("ddau ddeg munud wedi naw", words);
+        assertEquals("dau ddeg munud wedi naw", words);
     }
 
     @Test
