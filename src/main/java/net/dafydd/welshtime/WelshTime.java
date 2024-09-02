@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 public class WelshTime {
 
     public static String date(LocalDateTime time) {
-        int year = time.getYear();
         int month = time.getMonthValue();
         int day = time.getDayOfMonth();
 
@@ -20,7 +19,7 @@ public class WelshTime {
         String wordHour = numberToWord[hour];
 
         if (minute < 30) {
-            translation = softMutateForI(numberToWord[minute]) + " munud wedi " + wordHour;
+            translation = numberToWord[minute] + " munud wedi " + wordHour;
         }
 
         if (minute > 30) {
@@ -36,10 +35,6 @@ public class WelshTime {
         }
 
         return translation;
-    }
-
-    private static int mapZeroToTwelve(int n) {
-        return n == 0 ? 12 : n;
     }
 
     public static String softMutateForI(String followOn) {
@@ -90,16 +85,16 @@ public class WelshTime {
             "un deg saith",
             "un deg wyth",
             "un deg naw",
-            "dauddeg",
-            "dauddeg un",
-            "dauddeg dau",
-            "dauddeg tri",
-            "dauddeg pedwar",
-            "dauddeg pump",
-            "dauddeg chwech",
-            "dauddeg saith",
-            "dauddeg wyth",
-            "dauddeg naw"
+            "dau ddeg",
+            "dau ddeg un",
+            "dau ddeg dau",
+            "dau ddeg tri",
+            "dau ddeg pedwar",
+            "dau ddeg pump",
+            "dau ddeg chwech",
+            "dau ddeg saith",
+            "dau ddeg wyth",
+            "dau ddeg naw"
     };
 
     private final static String[] ordinals = {

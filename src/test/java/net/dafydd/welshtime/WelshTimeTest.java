@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class WelshTimeTest {
 
@@ -31,6 +32,13 @@ class WelshTimeTest {
     void minutesPast() {
         String words = WelshTime.time(t(2019, 5, 3, 9, 17));
         assertEquals("un deg saith munud wedi naw", words);
+    }
+
+    @Test
+    void minutesPastShouldNotSoftMutateTheFirstPart() {
+        String words2 = WelshTime.time(t(2019, 5, 3, 9, 20));
+        assertNotEquals("ddau ddeg munud wedi naw", words2);
+        assertEquals("dau ddeg munud wedi naw", words2);
     }
 
     @Test
