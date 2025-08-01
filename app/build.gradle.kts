@@ -51,7 +51,7 @@ tasks.named<Test>("test") {
 //publishing {
 //    publications {
 //        create<MavenPublication>("mavenJava") {
-//            artifactId = "welshtime2"
+//            artifactId = "welshtime"
 //            from(components["java"])
 //        }
 //    }

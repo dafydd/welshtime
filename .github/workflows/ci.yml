@@ -39,7 +39,7 @@ jobs:
         if: always()  # ensure reports uploaded even if tests fail
         uses: actions/upload-artifact@v4
         with:
-          name: welshtime2-test-${{ github.run_number }}-${{ github.sha }}
+          name: welshtime-test-${{ github.run_number }}-${{ github.sha }}
           path: app/build/reports/tests/test/
           retention-days: 7
 
@@ -56,7 +56,7 @@ jobs:
         uses: actions/upload-artifact@v4
         id: collect_release_build_zip
         with:
-          name: welshtime2-distZip-${{ github.run_number }}-${{ github.sha }}
+          name: welshtime-distZip-${{ github.run_number }}-${{ github.sha }}
           path: app/build/distributions/app-*.zip
           retention-days: 30
 
