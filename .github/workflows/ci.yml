@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  push:
+  pull_request: { }
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  #  fetch full history for automatic patch version counting
+
+      - name: Set up JDK 23
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '23'
+          cache: gradle
+
+      - name: Make versioning script executable
+        run: chmod +x ./set_version.sh
+        working-directory: ${{ github.workspace }}
+
+      - name: Run versioning script
+        id: set_version
+        run: ./set_version.sh
+        working-directory: ${{ github.workspace }}
+
+      - name: Build and test
+        id: test_run
+        run: ./gradlew --console=plain --info build test --no-daemon
+        continue-on-error: true
+
+      - name: Upload test reports
+        if: always()  # ensure reports uploaded even if tests fail
+        uses: actions/upload-artifact@v4
+        with:
+          name: welshtime2-test-${{ github.run_number }}-${{ github.sha }}
+          path: app/build/reports/tests/test/
+          retention-days: 7
+
+      - name: Make build script executable
+        run: chmod +x ./build_release.sh
+        working-directory: ${{ github.workspace }}
+
+      - name: Run custom release build
+        id: release_build_zip
+        run: ./build_release.sh ${{ github.run_number }} ${{ github.sha }}
+        working-directory: ${{ github.workspace }}
+
+      - name: Upload release artifact
+        uses: actions/upload-artifact@v4
+        id: collect_release_build_zip
+        with:
+          name: welshtime2-distZip-${{ github.run_number }}-${{ github.sha }}
+          path: app/build/distributions/app-*.zip
+          retention-days: 30
+
+      - name: Make tag_on_version_bump.py executable
+        run: chmod +x ./tag_on_version_bump.py
+        working-directory: ${{ github.workspace }}
+
+      - name: Run versioning script
+        if: steps.test_run.outcome != 'failure'
+        id: tag_on_version_bump
+        run: ./tag_on_version_bump.py
+        working-directory: ${{ github.workspace }}
+
+      - name: Fail if tests failed
+        if: steps.test_run.outcome == 'failure'
+        run: exit 1
